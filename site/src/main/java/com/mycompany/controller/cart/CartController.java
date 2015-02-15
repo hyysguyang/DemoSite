@@ -19,6 +19,7 @@ package com.mycompany.controller.cart;
 
 import org.broadleafcommerce.core.catalog.domain.Product;
 import org.broadleafcommerce.core.inventory.service.InventoryUnavailableException;
+import org.broadleafcommerce.core.order.service.call.AddToCartItem;
 import org.broadleafcommerce.core.order.service.exception.AddToCartException;
 import org.broadleafcommerce.core.order.service.exception.ProductOptionValidationException;
 import org.broadleafcommerce.core.order.service.exception.RemoveFromCartException;
@@ -27,7 +28,7 @@ import org.broadleafcommerce.core.order.service.exception.UpdateCartException;
 import org.broadleafcommerce.core.pricing.service.exception.PricingException;
 import org.broadleafcommerce.core.web.controller.cart.BroadleafCartController;
 import org.broadleafcommerce.core.web.order.CartState;
-import org.broadleafcommerce.core.web.order.model.AddToCartItem;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,6 +48,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/cart")
 public class CartController extends BroadleafCartController {
     
+    @Value("${solr.index.use.sku}")
+    protected boolean useSku;
+
     @Override
     @RequestMapping("")
     public String cart(HttpServletRequest request, HttpServletResponse response, Model model) throws PricingException {
@@ -77,6 +81,9 @@ public class CartController extends BroadleafCartController {
                 // We don't want to return a productId to hide actions for when it is a product that has multiple
                 // product options. The user may want the product in another version of the options as well.
                 responseMap.put("productId", addToCartItem.getProductId());
+            }
+            if(useSku) {
+                responseMap.put("skuId", addToCartItem.getSkuId());
             }
         } catch (AddToCartException e) {
             if (e.getCause() instanceof RequiredAttributeNotProvidedException) {

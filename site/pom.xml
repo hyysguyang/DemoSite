@@ -36,9 +36,11 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>8.1.5.v20120716</version>
                 <configuration>
-                    <webAppSourceDirectory>${webappDirectory}</webAppSourceDirectory>
-                    <contextPath>/</contextPath>
-                    
+                    <scanIntervalSeconds>2</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+
                     <!-- !!!!! WARNING !!!!!! -->
                     <!-- This configuration of Jetty is not as secure as it causes Sessions to use a java.util.Random
                         vs. java.security.SecureRandom. This speeds up startup times locally but this should not be used
@@ -66,7 +68,7 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
-        
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>keytool-maven-plugin</artifactId>
@@ -96,7 +98,7 @@
                     <keyalg>RSA</keyalg>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.zeroturnaround</groupId>
                 <artifactId>jrebel-maven-plugin</artifactId>

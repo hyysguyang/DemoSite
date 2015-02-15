@@ -10,7 +10,8 @@
     <name>ecommerce</name>
     <url>http://www.blc-archetype.com</url>
     <properties>
-        <blc.version>3.1.12-GA</blc.version>
+        <blc.version>3.2.0-SNAPSHOT</blc.version>
+        <blc.menu.version>1.0.0-SNAPSHOT</blc.menu.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <description>My Company's eCommerce Website</description>
@@ -19,6 +20,11 @@
             <id>public snapshots</id>
             <name>public snapshots</name>
             <url>http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>public releases</id>
+            <name>public releases</name>
+            <url>http://nexus.broadleafcommerce.org/nexus/content/repositories/releases/</url>
         </repository>
     </repositories>
     <build>
@@ -107,7 +113,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.0.2</version>
+                    <version>3.1</version>
                     <configuration>
                         <source>1.6</source>
                         <target>1.6</target>
@@ -256,6 +262,13 @@
                 <groupId>org.broadleafcommerce</groupId>
                 <artifactId>broadleaf-open-admin-platform</artifactId>
                 <version>${blc.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.broadleafcommerce</groupId>
+                <artifactId>broadleaf-menu</artifactId>
+                <version>${blc.menu.version}</version>
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>

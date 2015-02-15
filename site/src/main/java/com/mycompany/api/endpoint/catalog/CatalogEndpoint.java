@@ -47,7 +47,7 @@ import javax.ws.rs.core.MediaType;
  * This is a reference REST API endpoint for catalog. This can be modified, used as is, or removed. 
  * The purpose is to provide an out of the box RESTful catalog service implementation, but also 
  * to allow the implementor to have fine control over the actual API, URIs, and general JAX-RS annotations.
- * 
+ *
  * @author Kelly Tisdell
  *
  */
@@ -68,23 +68,23 @@ public class CatalogEndpoint extends
 
     @Override
     @GET
-    @Path("search/products")
-    public SearchResultsWrapper findProductsByQuery(@Context HttpServletRequest request,
+    @Path("search")
+    public SearchResultsWrapper findSearchResultsByQuery(@Context HttpServletRequest request,
             @QueryParam("q") String q,
             @QueryParam("pageSize") @DefaultValue("15") Integer pageSize,
             @QueryParam("page") @DefaultValue("1") Integer page) {
-        return super.findProductsByQuery(request, q, pageSize, page);
+        return super.findSearchResultsByQuery(request, q, pageSize, page);
     }
 
     @Override
     @GET
-    @Path("search/category/{categoryId}/products")
-    public SearchResultsWrapper findProductsByCategoryAndQuery(@Context HttpServletRequest request,
+    @Path("search/category/{categoryId}")
+    public SearchResultsWrapper findSearchResultsByCategoryAndQuery(@Context HttpServletRequest request,
             @PathParam("categoryId") Long categoryId,
             @QueryParam("q") String q,
             @QueryParam("pageSize") @DefaultValue("15") Integer pageSize,
             @QueryParam("page") @DefaultValue("1") Integer page) {
-        return super.findProductsByCategoryAndQuery(request, categoryId, q, pageSize, page);
+        return super.findSearchResultsByCategoryAndQuery(request, categoryId, q, pageSize, page);
     }
 
     @Override
@@ -138,9 +138,9 @@ public class CatalogEndpoint extends
     public CategoryWrapper findCategoryById(@Context HttpServletRequest request,
             @PathParam("id") Long id,
             @QueryParam("productLimit") @DefaultValue("20") int productLimit,
-            @QueryParam("productOffset") @DefaultValue("1") int productOffset,
+            @QueryParam("productOffset") @DefaultValue("0") int productOffset,
             @QueryParam("subcategoryLimit") @DefaultValue("20") int subcategoryLimit,
-            @QueryParam("subcategoryOffset") @DefaultValue("1") int subcategoryOffset) {
+            @QueryParam("subcategoryOffset") @DefaultValue("0") int subcategoryOffset) {
         return super.findCategoryById(request, id, productLimit, productOffset,
                 subcategoryLimit, subcategoryOffset);
     }
@@ -151,9 +151,9 @@ public class CatalogEndpoint extends
     public CategoryWrapper findCategoryByIdOrName(@Context HttpServletRequest request,
             @QueryParam("searchParameter") String searchParameter,
             @QueryParam("productLimit") @DefaultValue("20") int productLimit,
-            @QueryParam("productOffset") @DefaultValue("1") int productOffset,
+            @QueryParam("productOffset") @DefaultValue("0") int productOffset,
             @QueryParam("subcategoryLimit") @DefaultValue("20") int subcategoryLimit,
-            @QueryParam("subcategoryOffset") @DefaultValue("1") int subcategoryOffset) {
+            @QueryParam("subcategoryOffset") @DefaultValue("0") int subcategoryOffset) {
         return super.findCategoryByIdOrName(request, searchParameter,
                 productLimit, productOffset, subcategoryLimit, subcategoryOffset);
     }
@@ -217,7 +217,7 @@ public class CatalogEndpoint extends
             @PathParam("id") Long id) {
         return super.findSkuById(request, id);
     }
-    
+
     @Override
     @GET
     @Path("sku/inventory")
